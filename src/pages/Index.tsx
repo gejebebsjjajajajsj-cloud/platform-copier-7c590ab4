@@ -10,11 +10,10 @@ import FooterCTA from '@/components/FooterCTA';
 import NotificationToast from '@/components/NotificationToast';
 
 // Import images
-import coverImage from '@/assets/cover-image.jpg';
+import coverImage from '@/assets/cover-image.png';
 import avatarImage from '@/assets/avatar-image.jpg';
-import feedImage1 from '@/assets/feed-image-1.jpg';
-import feedImage2 from '@/assets/feed-image-2.jpg';
-import feedImage3 from '@/assets/feed-image-3.jpg';
+import perfil1 from '@/assets/perfil1.png';
+import feedImage1 from '@/assets/feed-image-1.png';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('videos');
@@ -22,9 +21,9 @@ const Index = () => {
   const profileData = {
     name: 'Kamylinha Santos',
     username: 'eukamylinhasantos',
-    bio: 'Oi, meus amores! 🔥💦 Sou a Kamylinha Santos, a musa da dancinha do tiktok, e hoje vou revelar um lado meu que vai te deixar sem fôlego… Imagine vídeos exclusivos, momentos íntimos e conteúdos que vão te surpreender. 😏 Cada centímetro do meu corpo é pura tentação e minhas fotos são um convite exclusivo para você explorar seus desejos mais secretos – tudo sem censura! Se você tem coragem de se perder nessa paixão sem limites, vem comigo... Estou te esperando para uma experiência única e irresistível.😈💋',
+    bio: 'Oi, meus amores! 🔥💦 Sou a Kamylinha Santos, a musa da dancinha do tiktok, e hoje vou revelar um lado meu que vai te deixar sem fôlego… Imagine vídeos gozando com meus ficantes, trisal com amigas safadas e momentos íntimos onde me entrego de corpo e alma. 😏 Cada centímetro do meu corpo é pura tentação e minhas fotos peladas são um convite exclusivo para você explorar seus desejos mais secretos – tudo sem censura! Se você tem coragem de se perder nessa paixão sem limites, vem comigo... Estou te esperando para uma experiência única e irresistível.😈💋',
     coverImage: coverImage,
-    avatarImage: avatarImage,
+    avatarImage: perfil1,
     stats: {
       photos: 354,
       videos: 148,
@@ -40,13 +39,13 @@ const Index = () => {
       comments: '1.9K'
     },
     {
-      mediaUrl: feedImage2,
+      mediaUrl: feedImage1,
       isVideo: false,
       likes: '89.6K',
       comments: '7.1K'
     },
     {
-      mediaUrl: feedImage3,
+      mediaUrl: feedImage1,
       isVideo: false,
       likes: '55.3K',
       comments: '8.4K'
@@ -71,7 +70,7 @@ const Index = () => {
             {feedItems.map((item, index) => (
               <FeedCard
                 key={index}
-                avatarImage={avatarImage}
+                avatarImage={perfil1}
                 name={profileData.name}
                 username={profileData.username}
                 mediaUrl={item.mediaUrl}

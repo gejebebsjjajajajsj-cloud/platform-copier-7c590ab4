@@ -1,4 +1,5 @@
 import { Search, Plus, MessageCircle } from 'lucide-react';
+import privacyLogo from '@/assets/privacy-logo.svg';
 
 const Header = () => {
   return (
@@ -6,9 +7,11 @@ const Header = () => {
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <span className="text-xl font-bold text-foreground">
-            Privacy
-          </span>
+          <img 
+            src={privacyLogo} 
+            alt="Privacy Logo" 
+            className="h-10 w-auto"
+          />
         </div>
 
         {/* Search - Hidden on Mobile */}
