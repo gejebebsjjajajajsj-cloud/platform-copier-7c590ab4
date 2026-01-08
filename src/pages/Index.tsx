@@ -11,7 +11,6 @@ import NotificationToast from '@/components/NotificationToast';
 
 // Import images
 import coverImage from '@/assets/cover-image.png';
-import avatarImage from '@/assets/avatar-image.jpg';
 import perfil1 from '@/assets/perfil1.png';
 import feedImage1 from '@/assets/feed-image-1.png';
 
@@ -33,14 +32,14 @@ const Index = () => {
 
   const feedItems = [
     {
-      mediaUrl: feedImage1,
-      isVideo: false,
+      mediaUrl: '/videos/video1.mp4',
+      isVideo: true,
       likes: '67.4K',
       comments: '1.9K'
     },
     {
-      mediaUrl: feedImage1,
-      isVideo: false,
+      mediaUrl: '/videos/video2.mp4',
+      isVideo: true,
       likes: '89.6K',
       comments: '7.1K'
     },
