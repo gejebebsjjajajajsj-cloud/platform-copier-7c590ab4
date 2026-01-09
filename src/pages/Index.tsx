@@ -50,6 +50,18 @@ const Index = () => {
       isVideo: false,
       likes: '55.3K',
       comments: '8.4K'
+    },
+    {
+      mediaUrl: '/videos/video3.mp4',
+      isVideo: true,
+      likes: '42.1K',
+      comments: '3.2K'
+    },
+    {
+      mediaUrl: '/videos/video4.mp4',
+      isVideo: true,
+      likes: '78.5K',
+      comments: '5.6K'
     }
   ];
 
