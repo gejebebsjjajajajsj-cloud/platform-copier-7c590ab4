@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-origin-domain",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 const SYNC_API_BASE = "https://api.syncpayments.com.br";
@@ -25,26 +25,27 @@ interface Credentials {
   sync_client_secret: string;
 }
 
-async function getCredentialsByDomain(domain: string): Promise<Credentials | null> {
+async function getCredentialsFromSettings(): Promise<Credentials | null> {
   const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
   const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
   
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
   
-  // Busca credenciais pelo domínio
+  // Busca credenciais da tabela site_settings
   const { data, error } = await supabase
-    .from("payment_credentials")
+    .from("site_settings")
     .select("sync_client_id, sync_client_secret")
-    .eq("domain", domain)
-    .eq("is_active", true)
+    .limit(1)
     .single();
   
-  if (error || !data) {
-    console.log(`No credentials found for domain: ${domain}`);
+  if (error || !data?.sync_client_id || !data?.sync_client_secret) {
     return null;
   }
   
-  return data;
+  return {
+    sync_client_id: data.sync_client_id,
+    sync_client_secret: data.sync_client_secret,
+  };
 }
 
 async function getAccessToken(credentials: Credentials): Promise<string> {
@@ -109,45 +110,14 @@ serve(async (req) => {
       );
     }
 
-    // Pega o domínio do header ou do referer
-    let domain = req.headers.get("x-origin-domain");
-    if (!domain) {
-      const referer = req.headers.get("referer") || req.headers.get("origin");
-      if (referer) {
-        try {
-          const url = new URL(referer);
-          domain = url.hostname;
-        } catch {
-          domain = null;
-        }
-      }
-    }
+    // Busca credenciais do site_settings
+    const credentials = await getCredentialsFromSettings();
 
-    console.log("Request domain:", domain);
-
-    let credentials: Credentials | null = null;
-
-    // Se tem domínio, tenta buscar credenciais específicas
-    if (domain) {
-      credentials = await getCredentialsByDomain(domain);
-    }
-
-    // Fallback para secrets globais se não encontrar no banco
     if (!credentials) {
-      const clientId = Deno.env.get("SYNC_PAYMENTS_CLIENT_ID");
-      const clientSecret = Deno.env.get("SYNC_PAYMENTS_CLIENT_SECRET");
-      
-      if (!clientId || !clientSecret) {
-        throw new Error("Credenciais do Sync Payments não configuradas para este domínio");
-      }
-      
-      credentials = {
-        sync_client_id: clientId,
-        sync_client_secret: clientSecret,
-      };
-      console.log("Using fallback global credentials");
-    } else {
-      console.log("Using domain-specific credentials for:", domain);
+      return new Response(
+        JSON.stringify({ error: "Credenciais do Sync Payments não configuradas. Configure no painel admin." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Get access token
