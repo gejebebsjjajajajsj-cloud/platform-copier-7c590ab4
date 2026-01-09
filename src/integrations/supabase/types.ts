@@ -70,6 +70,8 @@ export type Database = {
           stats_videos: number | null
           subscription_original_price: number | null
           subscription_price: number
+          sync_client_id: string | null
+          sync_client_secret: string | null
           updated_at: string
         }
         Insert: {
@@ -97,6 +99,8 @@ export type Database = {
           stats_videos?: number | null
           subscription_original_price?: number | null
           subscription_price?: number
+          sync_client_id?: string | null
+          sync_client_secret?: string | null
           updated_at?: string
         }
         Update: {
@@ -124,6 +128,8 @@ export type Database = {
           stats_videos?: number | null
           subscription_original_price?: number | null
           subscription_price?: number
+          sync_client_id?: string | null
+          sync_client_secret?: string | null
           updated_at?: string
         }
         Relationships: []
